@@ -65,7 +65,6 @@
 5 使用style属性（不推荐）  
 <circle style="stroke: #000000; fill:#00ff00;" />  
 
-
 ## svg基本操作API
 ```
 创建图形
@@ -103,4 +102,27 @@ fill="transparent"/>
 </svg>
 ```
 
+## 元素分组
+1 <g> <use>配合
+```
+<svg  width='900' height='900' xmlns="http://www.w3.org/2000/svg">
+ <g id='testgroup'>
+   <line x1='300' y1='300' x2='400' y2='400'  stroke='red' stroke-width='3' />
+ </g>
+ <use xlink:href='#testgroup'  transform="rotate(5)" />
+</svg>
+```
+缺点 无法自定义use的样式及内容
 
+2 解决1的问题 用defs
+```
+<svg viewBox = "0 0 1000 1000" version = "1.1">
+    <defs>
+        <circle id = "s1" cx = "200" cy = "200" r = "200" fill = "yellow" stroke = "black" stroke-width = "3"/>
+        <ellipse id = "s2" cx = "200" cy = "150" rx = "200" ry = "150" fill = "salmon" stroke = "black" stroke-width = "3"/>
+    </defs>
+    <use x = "100" y = "100" xlink:href = "#s1"/>
+    <use x = "100" y = "650" xlink:href = "#s2"/>
+</svg>
+```
+# ddd 
