@@ -282,3 +282,4 @@ pre.target:hover { filter:url(#f3); }
 
 # SVG中stroke-dasharray及stroke-dashoffset属性
 ![image][https://github.com/wangabeng/svg_animate/blob/master/a.png]
+![image](a.png)
