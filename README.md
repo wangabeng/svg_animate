@@ -158,6 +158,10 @@ SVG也可以像HTML那样为元素添加自定义事件。
 8 更改svg内元素的z-index属性 貌似用不上 略 详见
 https://blog.csdn.net/happyduoduo1/article/details/51789552
 
+9 获取path的长度 pathele.getTotalLength()
+例如
+  var path = document.querySelector('path');
+  var length = path.getTotalLength();
 ```
 ## svg坐标系
 1 用户坐标系 也称原始坐标系 是svg元素创建的时候自带的坐标系  
@@ -280,6 +284,94 @@ pre.target:hover { filter:url(#f3); }
 </html>
 ```
 
-# SVG中stroke-dasharray及stroke-dashoffset属性
-![image][https://github.com/wangabeng/svg_animate/blob/master/a.png]
+# SVG中stroke-dasharray及stroke-dashoffset属性 
+stroke-dasharray属性用来设置描边的点划线的图案范式。就是设置实线和虚线的宽度  
+
+比如：  
+stroke-dasharray: 50 20;   
+效果就是：  
 ![image](/a.png)
+50和20分别对应了实线和虚线的长度
+
+stroke-dashoffset则指定了dash模式到路径开始的距离，就是实线虚线绘制的起点距路径开始的距离  
+
+比如：   
+stroke-dashoffset: 30;   
+效果： 
+![image](/b.png)
+由于向左移动30像素，这样左边的实线就跟虚线一样长了。
+
+我们可以设置stroke-dashoffset与stroke-dasharray相同的值实现“画线”的效果： 
+代码：
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"/>
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+
+    <title>XXX-xxx</title>
+    <link href="./css/awesome.css" rel="stylesheet">
+    <link href="./css/base.css" rel="stylesheet">
+    <link href="./css/common.css" rel="stylesheet">
+    <link href="./css/iSlider.css" rel="stylesheet">
+    <link href="./css/index.css" rel="stylesheet">
+    
+    <script type="text/javascript" src="./js/jquery1.10.2.js"></script>
+    <script type="text/javascript" src="./js/fontSize.js"></script>
+    <script type="text/javascript" src="./js/common.js"></script>
+    <style>
+        /*可以设置svg视野大小 可理解为工作区大小 然后svg内path的尺寸会跟着缩放*/
+        svg {
+          width: 2rem;
+          height: 2rem;
+        }
+        path {
+          stroke-dasharray: 2204.536865234375;
+          stroke-dashoffset: 2204.536865234375;
+          animation: dash 2s linear forwards;
+        }
+
+        @keyframes dash {
+          to {
+            stroke-dashoffset: 0;
+          }
+        }
+
+    </style>
+</head>
+<body>
+<div>
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+   width="940.5px" height="844.5px" viewBox="0 0 940.5 844.5" enable-background="new 0 0 940.5 844.5" xml:space="preserve">
+<g>
+  <path fill="none" stroke="#000000" stroke-width="20" d="M264.477,268.949c26.679,57.321,146.993-166.94,241.488-123.325
+    c94.495,43.615,218.987,7.52,290.985,209.051c71.995,201.53,17.315,332.376-190.082,333.88
+    c-207.398,1.504-402.39,69.183-421.889-206.043C165.48,207.285,208.979,71.928,225.478,171.19
+    C241.977,270.453,253.977,246.389,264.477,268.949z"/>
+</g>
+</svg>
+
+
+<img src="./img/svg.svg" alt="">
+</div>
+</body>
+<script>
+    $(function () {
+        // 画一个图形边框
+        !function () {
+            var path = document.querySelector('path');
+            var length = path.getTotalLength();
+            console.log(length);
+        }();
+
+    });
+</script>
+</html>
+```
+
+# dddd
