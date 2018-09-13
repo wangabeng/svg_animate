@@ -1,5 +1,71 @@
 # svg_animatesvg动画相关
 
+# svg样式表
+1 内联样式表  
+```
+<svg xmlns="http://www.w3.org/2000/svg">
+     
+    <style type="text/css" >
+      <![CDATA[
+ 
+        circle {
+           stroke: #006600;
+           fill:   #00cc00;
+        }
+ 
+      ]]>
+    </style>
+     
+    <circle  cx="40" cy="40" r="24"/>
+</svg>  
+```
+这种使用内联样式表的工作方式和在HTML元素上使用内联样式表是完全相同的。内联样式表可以在IE7和Firefox 3.0.5浏览器上正常工作。  
+
+2 class样式  
+你还可以为每个图形都添加一个class类，使用这个class类来在样式表中作为选择器选择相应的图形。  
+```
+<svg xmlns="http://www.w3.org/2000/svg">
+ 
+    <style type="text/css" >
+      <![CDATA[
+ 
+        circle.myGreen {
+           stroke: #006600;
+           fill:   #00cc00;
+        }
+       circle.myRed {
+       stroke: #660000;
+       fill:   #cc0000;
+    }
+ 
+      ]]>
+    </style>
+ 
+    <circle  class="myGreen" cx="40" cy="40"  r="24"/>
+    <circle  class="myRed"   cx="40" cy="100" r="24"/>
+</svg> 
+```
+
+3 使用外部样式表  
+```
+<?xml-stylesheet type="text/css" href="svg-stylesheet.css" ?>
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+ 
+ 
+    <circle cx="40" cy="40" r="24"
+       style="stroke:#006600; fill:#00cc00"/>
+ 
+</svg>
+```
+
+4 使用属性来添加CSS样式(推荐)  
+<circle stroke="#000000" fill="#00ff00" />  
+
+5 使用style属性（不推荐）  
+<circle style="stroke: #000000; fill:#00ff00;" />  
+
+
 ## svg基本操作API
 ```
 创建图形
