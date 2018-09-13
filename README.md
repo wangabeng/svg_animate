@@ -128,3 +128,5 @@ fill="transparent"/>
 # 坐标变换，注意先平移再放大 和先放大再平移的区别
 件svg精髓63-64页介绍
 
+# svg围绕中心旋转 加2个参数 及中心点的坐标即可
+transform='rotate(角度,centerX值,centerY)'
