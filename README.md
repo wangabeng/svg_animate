@@ -377,4 +377,18 @@ stroke-dashoffset: 30;
 </html>
 ```
 
-# dddd
+# SVG动画的三种方式
+1 css3 设置动画帧 frame 不同的帧 修改不同的svg元素的属性值（如画一个logo案例）  
+2 利用js 设置不同时间段（setAttribute不同的帧的transform值）（见svg钟案例）  
+3 使用animatetranform 例如：
+```
+<svg xmlns="http://www.w3.org/2000/svg" width="300px" height="200px">
+    <rect x="0" y="0" width="200" height="200" fill="yellow" stroke="red" stroke-width="1" />
+    <rect x="20" y="50" width="15" height="34" fill="blue" stroke="black" stroke-width="1" transform="rotation">
+        <!-- Rotate from 0 to 360 degrees, and move from 60 to 100 in the x direction. -->
+        <!-- Keep doing this until the drawing no longer exists. -->
+        <animateTransform attributeType="XML" attributeName="transform" begin="0s" dur="5s" type="rotate" from="20 60 60" to="360 100 60" repeatCount="indefinite" />
+    </rect>
+</svg>
+```
+4 设置轨迹动画 用animateMotion 详见《svg精髓》。
