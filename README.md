@@ -280,4 +280,5 @@ pre.target:hover { filter:url(#f3); }
 </html>
 ```
 
-# dedd
+# SVG中stroke-dasharray及stroke-dashoffset属性
+![image][./a.png]
