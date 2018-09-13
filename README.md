@@ -324,15 +324,16 @@ stroke-dashoffset: 30;
     <script type="text/javascript" src="./js/jquery1.10.2.js"></script>
     <script type="text/javascript" src="./js/fontSize.js"></script>
     <script type="text/javascript" src="./js/common.js"></script>
+    <script type="text/javascript" src="./js/iSlider.js"></script>
+    <script type="text/javascript" src="./js/iSlider.animate.js"></script>
+    <script type="text/javascript" src="./js/iSlider.dot.js"></script>
+    <script type="text/javascript" src="./js/iSlider.plugin.button.js"></script>
+    <script type="text/javascript" src='./layer/layer.js'></script>
     <style>
         /*可以设置svg视野大小 可理解为工作区大小 然后svg内path的尺寸会跟着缩放*/
-        svg {
-          width: 2rem;
-          height: 2rem;
-        }
-        path {
-          stroke-dasharray: 2204.536865234375;
-          stroke-dashoffset: 2204.536865234375;
+        path.graphic {
+          /*stroke-dasharray: 2204.536865234375;*/
+          /*stroke-dashoffset: 2204.536865234375;*/
           animation: dash 2s linear forwards;
         }
 
@@ -346,14 +347,14 @@ stroke-dashoffset: 30;
 </head>
 <body>
 <div>
-<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
    width="940.5px" height="844.5px" viewBox="0 0 940.5 844.5" enable-background="new 0 0 940.5 844.5" xml:space="preserve">
-<g>
-  <path fill="none" stroke="#000000" stroke-width="20" d="M264.477,268.949c26.679,57.321,146.993-166.94,241.488-123.325
-    c94.495,43.615,218.987,7.52,290.985,209.051c71.995,201.53,17.315,332.376-190.082,333.88
-    c-207.398,1.504-402.39,69.183-421.889-206.043C165.48,207.285,208.979,71.928,225.478,171.19
-    C241.977,270.453,253.977,246.389,264.477,268.949z"/>
-</g>
+    <g>
+      <path class='graphic' fill="none" stroke="#000000" stroke-width="20" d="M264.477,268.949c26.679,57.321,146.993-166.94,241.488-123.325
+        c94.495,43.615,218.987,7.52,290.985,209.051c71.995,201.53,17.315,332.376-190.082,333.88
+        c-207.398,1.504-402.39,69.183-421.889-206.043C165.48,207.285,208.979,71.928,225.478,171.19
+        C241.977,270.453,253.977,246.389,264.477,268.949z"/>
+    </g>
 </svg>
 
 
@@ -362,11 +363,13 @@ stroke-dashoffset: 30;
 </body>
 <script>
     $(function () {
-        // 画一个图形边框
+        // 计算path图形总长度 然后设置其 stroke-dasharray stroke-dashoffset为这个取得的值
         !function () {
-            var path = document.querySelector('path');
-            var length = path.getTotalLength();
-            console.log(length);
+            var pathEle = document.querySelector('.graphic');
+            var length = pathEle.getTotalLength();
+            pathEle.setAttribute('stroke-dasharray', length);
+            pathEle.setAttribute('stroke-dashoffset', length);
+            // console.log(length);
         }();
 
     });
