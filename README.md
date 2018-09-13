@@ -67,13 +67,97 @@
 
 ## svg基本操作API
 ```
-创建图形
+1 document.getElementById根据元素ID来获取这个容器对象
+如已经存在一个svg元素
+<svg xmlns="http://www.w3.org/2000/svg" id="main" version="1.1" height="200"></svg>
+可以这样获取这个元素：
+var main = document.getElementById( "main" );
+
+2 创建图形 
 document.createElementNS(ns, tagName)
-添加图形
+例如创建一个矩形： document.createElementNS( "http://www.w3.org/2000/svg", "rect" )
+
+3 添加图形到svg容器内
 element.appendChild(childElement)
-设置/获取属性
+例如：
+main.appendChild( rect );
+
+4 设置/获取属性
 element.setAttribute(name, value)
 element.getAttribute(name)
+例如：
+rect.setAttribute( "width", 100 );
+rect.setAttribute( "height", 30 );
+rect.setAttribute( "style", "fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)" );
+
+案例：往一个svg容器内添加一个矩形
+<script>
+    var main = document.getElementById( "main" );
+    var rect = document.createElementNS( "http://www.w3.org/2000/svg", "rect" );
+    rect.setAttribute( "width", 100 );
+    rect.setAttribute( "height", 30 );
+    rect.setAttribute( "style", "fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)" );
+    main.appendChild( rect );
+</script>
+
+5 设置文本
+textContent属性可以获取和设置text元素文本
+例如：
+// SVG
+<text id="text" x="25" y="25" font-size="16" style="fill:rgb(0,0,0);">foo</text>;
+ 
+// JS
+<script>
+    var text = document.getElementById( "text" );
+    console.log( text.textContent ); // foo
+    text.textContent = "Hello world!"; // 重新设置文本
+</script>
+
+6 获取元素高宽和坐标
+getBBox方法可以获取所有元素的高宽和坐标：
+// SVG
+<text id="text" x="25" y="25" font-size="16" style="fill:rgb(0,0,0);">foo</text>;
+ 
+// JS
+<script>
+    var text = document.getElementById( "text" );
+    console.log( text.getBBox() ); // {height: 16, width: 32, y: 11, x: 25} 
+</script>
+
+***重要***
+7 事件处理
+SVG也可以像HTML那样为元素添加自定义事件。
+使用on + 事件名属性监听：
+// SVG
+<text id="text" x="25" y="25" font-size="16" style="fill:rgb(0,0,0);">foo</text>;
+ 
+// JS
+<script>
+    var text = document.getElementById( "text" );
+    // 点击文本时弹出其内容
+    text.onclick = function() {
+        alert( this.textContent );
+    };
+</script>
+
+也可以使用element.addEventListener方法监听：
+// SVG
+<text id="text" x="25" y="25" font-size="16" style="fill:rgb(0,0,0);">foo</text>;
+ 
+// JS
+<script>
+    var text = document.getElementById( "text" );
+    // 点击文本时弹出其内容
+    // 事件名前面不带on
+    text.addEventListener( 'click', function() {
+        alert( this.textContent );
+    } );
+</script>
+两种方法有什么不同？on + 事件名属性只能为同一个事件添加一个处理方法，再对这个属性进行设置时会覆盖掉上一个方法，而element.addEventListener多次使用也不会覆盖上一个，而是从原来的事件上叠加。
+
+8 更改svg内元素的z-index属性 貌似用不上 略 详见
+https://blog.csdn.net/happyduoduo1/article/details/51789552
+
 ```
 ## svg坐标系
 1 用户坐标系 也称原始坐标系 是svg元素创建的时候自带的坐标系  
@@ -130,3 +214,70 @@ fill="transparent"/>
 
 # svg围绕中心旋转 加2个参数 及中心点的坐标即可
 transform='rotate(角度,centerX值,centerY)'
+
+# 普通html使用svg的filter滤镜 就像给html添加了ps 案例
+```
+<!DOCTYPE HTML>
+<html>
+<meta charset="utf-8">
+<head>
+<title>Analog Clock</title>
+<style>
+p.target { filter:url(#f3); }
+p.target:hover { filter:url(#f5); }
+b.target { filter:url(#f1); }
+b.target:hover { filter:url(#f4); }
+pre.target { filter:url(#f2); }
+pre.target:hover { filter:url(#f3); }
+
+</style>
+</head>
+<body>
+
+<p class="target" style="background: lime;">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+    ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+</p>
+<pre class="target">lorem</pre>
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing
+    <b class="target">elit, sed do eiusmod tempor incididunt
+    ut labore et dolore magna aliqua.</b>
+    Ut enim ad minim veniam.
+</p>
+<svg height="0">
+  <filter id="f1">
+    <feGaussianBlur stdDeviation="3"/>
+  </filter>
+</svg><svg height="0">
+  <filter id="f2">
+    <feColorMatrix values="0.3333 0.3333 0.3333 0 0
+                           0.3333 0.3333 0.3333 0 0
+                           0.3333 0.3333 0.3333 0 0
+                           0      0      0      1 0"/>
+  </filter>
+</svg>
+<svg height="0">
+  <filter id="f3">
+    <feConvolveMatrix filterRes="100 100" style="color-interpolation-filters:sRGB"
+      order="3" kernelMatrix="0 -1 0   -1 4 -1   0 -1 0" preserveAlpha="true"/>
+  </filter>
+  <filter id="f4">
+    <feSpecularLighting surfaceScale="5" specularConstant="1"
+                        specularExponent="10" lighting-color="white">
+      <fePointLight x="-5000" y="-10000" z="20000"/>
+    </feSpecularLighting>
+  </filter>
+  <filter id="f5">
+    <feColorMatrix values="1 0 0 0 0
+                           0 1 0 0 0
+                           0 0 1 0 0
+                           0 1 0 0 0" style="color-interpolation-filters:sRGB"/>
+  </filter>
+</svg>
+
+</body>
+</html>
+```
+
+# dedd
